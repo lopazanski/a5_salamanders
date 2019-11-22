@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(janitor)
+library(kableExtra)
 
 salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
   clean_names() %>% 
@@ -23,9 +24,11 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 ### Data and Methods
 From Metadata: "Since 1987, we have been monitoring populations of West Slope cutthroat trout (Onchorhyncus clarki clarki) in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest. Beginning in 1993, we included monitoring of Pacific Giant Salamanders, Dicamptodon tenebrosus. The two standard reaches are in a section of clearcut forest (ca. 1963) and an upstream 500 year old coniferous forest. Sub-reaches are sampled with 2-pass electrofishing, and all captured vertebrates are measured and weighed. This study constitutes one of the longest continuous records of salmonid populations on record."
 
-Site Code = coded name of sample area
-Reach = reach sampled (in 50m distances)
+Site Code = coded name of sample area within Mack creek
+Section = OG, old growth; CC, clear cut
+Reach = reach sampled (in 50m distances); Lower (0-50), Middle (50-100), Upper (100-150)
 Pass = electroshocking pass number
+Unit Type = Cascade = C, Pool = P, Side-channel = SC, others (including IP = isolated pool)
 Length 1 = snout to vent
 Length 2 = snout to tail
 
@@ -33,9 +36,39 @@ Length 2 = snout to tail
 
 #### A.
 
-#### B.
+#### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
-#### C.
+Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
+
+
+```{r}
+count_creek <- salamander %>% 
+  filter(year == "2017" & unittype %in% c("C", "P", "SC")) %>%
+  mutate(
+    unittype = case_when(
+      unittype == "C" ~ "Cascade",
+      unittype == "P" ~ "Pool",
+      unittype == "SC" ~ "Side-Channel")) %>% 
+  count(section, unittype) %>% 
+  pivot_wider(names_from = section, values_from = n) %>% 
+  adorn_percentages(denominator = "col") %>% 
+  adorn_pct_formatting(digits = 1) %>% 
+  adorn_ns(position = "front")
+
+kable(count_creek, col.names = c("", "Clear Cut", "Old Growth")) %>%
+        kable_styling(bootstrap_options = c("striped", "hover"),
+                full_width = F,
+                position = "float_right")
+
+
+```
+
+
+
+#### C.Using the 2017 counts found in Results B above, answer: is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
+
+Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
+
 
 #### D.
 
