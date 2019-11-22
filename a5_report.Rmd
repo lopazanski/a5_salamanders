@@ -36,41 +36,23 @@ Length 2 = snout to tail
 
 #### A.
 
-<<<<<<< HEAD
-```{r}
-# subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
-salamander_abundance <- salamander %>% 
-  select(year, section, species) %>% 
-  mutate(species = ifelse(species == "DITE", 1, 0)) %>% 
-  mutate(species = as.numeric(species)) %>% 
-  mutate(section = ifelse(section == "OG", "Old Growth", "Clear Cut")) %>% 
-  group_by(year, section) %>% 
-  summarize(abundance = sum(species))
-  
-# Line plot showing salamander abundances from 1993 (start of monitoring) to present in both clear-cut and old growth forest sections
-ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
-  geom_line(aes(color = section))+
-  theme_classic()+
-  labs(x = "Year",
-       y = "Salamander abundance",
-       fill = NULL)
-  
-=======
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
 Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
 
 
 ```{r}
-count_creek <- salamander %>% 
-  filter(year == "2017" & unittype %in% c("C", "P", "SC")) %>%
-  mutate(
+count_creek_base <- salamander %>% 
+  filter(year == "2017" & unittype %in% c("C", "P", "SC")) %>% # keep data in 2017, specific habitat types
+  mutate( 
     unittype = case_when(
       unittype == "C" ~ "Cascade",
       unittype == "P" ~ "Pool",
       unittype == "SC" ~ "Side-Channel")) %>% 
   count(section, unittype) %>% 
-  pivot_wider(names_from = section, values_from = n) %>% 
+  pivot_wider(names_from = section, values_from = n)
+
+count_creek <- count_creek_base %>% 
   adorn_percentages(denominator = "col") %>% 
   adorn_pct_formatting(digits = 1) %>% 
   adorn_ns(position = "front")
@@ -78,24 +60,43 @@ count_creek <- salamander %>%
 kable(count_creek, col.names = c("", "Clear Cut", "Old Growth")) %>%
         kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
-                position = "float_right")
+                position = "float_right") %>% 
+add_header_above(c("Table 1: Proportions of giant salamanders \nin different channel classifications \nobserved in two sections of Mack Creek" = 3))
 
-
->>>>>>> 7e148cc9d64d8c49311e43cbeaf0993554957f7f
 ```
 
 
 
-<<<<<<< HEAD
-#### B.
-=======
-#### C.Using the 2017 counts found in Results B above, answer: is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
+
+#### C.
 
 Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
->>>>>>> 7e148cc9d64d8c49311e43cbeaf0993554957f7f
+```{r}
+# Is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
+chi_count <- count_creek_base %>% 
+  select(-unittype)
+
+chi_count_result <- chisq.test(chi_count)
+chi_count_result
+
+```
 
 
-#### D.
+#### D. 
+```{r}
+# Is there a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017? 
+
+salamander_weight <- salamander %>% 
+  filter(year == "2017") %>% 
+  select(section, weight) %>% 
+  group_by(section) %>% 
+  summarize(
+    mean_wt = mean(weight, na.rm = TRUE),
+    sd_wt = sd(weight, na.rm = TRUE),
+    sample_size = n()
+  )
+```
+
 
 #### E.
 
