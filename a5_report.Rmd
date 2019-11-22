@@ -36,10 +36,32 @@ Length 2 = snout to tail
 
 #### A.
 
+<<<<<<< HEAD
+=======
+```{r}
+# subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
+salamander_abundance <- salamander %>% 
+  select(year, section, species) %>% 
+  mutate(species = ifelse(species == "DITE", 1, 0)) %>% 
+  mutate(species = as.numeric(species)) %>% 
+  mutate(section = ifelse(section == "OG", "Old Growth", "Clear Cut")) %>% 
+  group_by(year, section) %>% 
+  summarize(abundance = sum(species))
+  
+# Line plot showing salamander abundances from 1993 (start of monitoring) to present in both clear-cut and old growth forest sections
+ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
+  geom_line(aes(color = section))+
+  theme_classic()+
+  labs(x = "Year",
+       y = "Salamander abundance",
+       fill = NULL)
+  
+``` 
+
+>>>>>>> fdd295b41635640e701761d19f319ce0091f1661
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
 Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
-
 
 ```{r}
 count_creek_base <- salamander %>% 
@@ -60,6 +82,7 @@ count_creek <- count_creek_base %>%
 kable(count_creek, col.names = c("", "Clear Cut", "Old Growth")) %>%
         kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
+<<<<<<< HEAD
                 position = "float_right") %>% 
 add_header_above(c("Table 1: Proportions of giant salamanders \nin different channel classifications \nobserved in two sections of Mack Creek" = 3))
 
@@ -78,6 +101,14 @@ chi_count <- count_creek_base %>%
 
 chi_count_result <- chisq.test(chi_count)
 chi_count_result
+=======
+                position = "float_right")
+```
+
+#### C.Using the 2017 counts found in Results B above, answer: is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
+
+Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
+>>>>>>> fdd295b41635640e701761d19f319ce0091f1661
 
 ```
 
