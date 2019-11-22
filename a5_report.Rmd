@@ -1,6 +1,6 @@
 ---
-title: "INTERESTIN SALAMANDER TITLE HERE"
-author: "Cori Lopazanski"
+title: "INTERESTING SALAMANDER TITLE HERE"
+author: "Cori Lopazanski, Kai Kopecky"
 date: "11/22/2019"
 output: html_document
 ---
@@ -10,3 +10,26 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Create Things Here
+
+### Introduction
+
+### Data and Methods
+
+### Results
+
+#### A.
+
+#### B.
+
+#### C.
+
+#### D.
+
+#### E.
+
+### Summary
+
+### References
+
+
+
