@@ -33,6 +33,28 @@ Length 2 = snout to tail
 
 #### A.
 
+```{r}
+# subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
+salamander_abundance <- salamander %>% 
+  select(year, section, species) %>% 
+  mutate(species = ifelse(species == "DITE", 1, 0)) %>% 
+  mutate(species = as.numeric(species)) %>% 
+  mutate(section = ifelse(section == "OG", "Old Growth", "Clear Cut")) %>% 
+  group_by(year, section) %>% 
+  summarize(abundance = sum(species))
+  
+# Line plot showing salamander abundances from 1993 (start of monitoring) to present in both clear-cut and old growth forest sections
+ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
+  geom_line(aes(color = section))+
+  theme_classic()+
+  labs(x = "Year",
+       y = "Salamander abundance",
+       fill = NULL)
+  
+```
+
+
+
 #### B.
 
 #### C.
