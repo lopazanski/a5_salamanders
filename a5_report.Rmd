@@ -5,8 +5,21 @@ date: "11/22/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo = FALSE, message = FALSE, error = FALSE, warning = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(janitor)
+
+salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
+  clean_names() %>% 
+  filter(species == "DITE")
 ```
 
-## Create Things Here
+From Metadata: "Since 1987, we have been monitoring populations of West Slope cutthroat trout (Onchorhyncus clarki clarki) in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest. Beginning in 1993, we included monitoring of Pacific Giant Salamanders, Dicamptodon tenebrosus. The two standard reaches are in a section of clearcut forest (ca. 1963) and an upstream 500 year old coniferous forest. Sub-reaches are sampled with 2-pass electrofishing, and all captured vertebrates are measured and weighed. This study constitutes one of the longest continuous records of salmonid populations on record."
+
+Site Code = coded name of sample area
+Reach = reach sampled (in 50m distances)
+Pass = electroshocking pass number
+Length 1 = snout to vent
+Length 2 = snout to tail
