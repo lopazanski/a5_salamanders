@@ -36,7 +36,6 @@ Length 2 = snout to tail
 
 #### A.
 
-<<<<<<< HEAD
 ```{r}
 # subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
 salamander_abundance <- salamander %>% 
@@ -55,11 +54,11 @@ ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
        y = "Salamander abundance",
        fill = NULL)
   
-=======
+``` 
+
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
 Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
-
 
 ```{r}
 count_creek <- salamander %>% 
@@ -79,20 +78,11 @@ kable(count_creek, col.names = c("", "Clear Cut", "Old Growth")) %>%
         kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
                 position = "float_right")
-
-
->>>>>>> 7e148cc9d64d8c49311e43cbeaf0993554957f7f
 ```
 
-
-
-<<<<<<< HEAD
-#### B.
-=======
 #### C.Using the 2017 counts found in Results B above, answer: is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
 
 Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
->>>>>>> 7e148cc9d64d8c49311e43cbeaf0993554957f7f
 
 
 #### D.
