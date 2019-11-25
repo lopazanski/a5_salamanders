@@ -11,7 +11,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(janitor)
 library(kableExtra)
-library(schoolmath)
 
 salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
   clean_names() %>% 
@@ -37,13 +36,7 @@ Length 2 = snout to tail
 
 #### A.
 
-<<<<<<< HEAD
-```{r, message=FALSE, echo=FALSE}
-=======
-<<<<<<< HEAD
-=======
 ```{r}
->>>>>>> fd28887209afc733582c66f58531407124172aa6
 # subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
 salamander_abundance <- salamander %>% 
   select(year, section, species) %>% 
@@ -57,20 +50,12 @@ salamander_abundance <- salamander %>%
 ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
   geom_line(aes(color = section))+
   theme_classic()+
-  theme(legend.position = c(0.2, 0.8))+
   labs(x = "Year",
        y = "Salamander abundance",
-       color = NULL)+
-  scale_x_continuous(limits = c(1993, 2017),
-                     breaks = c(seq(1993, 2017, by = 2)))+
-scale_y_continuous(limits = c(0, 400), expand = c(0,0))
-  
-                   
+       fill = NULL)
   
 ``` 
-***Figure 1.*** *Annual abundances of the Pacific Giant Salamander in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest from 1993 -2017. Salamanders were counted in a reach running through a section of old growth forest (blue line) and a section of historically clear-cut forest (red line).* 
 
->>>>>>> fdd295b41635640e701761d19f319ce0091f1661
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
 Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
@@ -94,7 +79,6 @@ count_creek <- count_creek_base %>%
 kable(count_creek, col.names = c("", "Clear Cut", "Old Growth")) %>%
         kable_styling(bootstrap_options = c("striped", "hover"),
                 full_width = F,
-<<<<<<< HEAD
                 position = "float_right") %>% 
 add_header_above(c("Table 1: Proportions of giant salamanders \nin different channel classifications \nobserved in two sections of Mack Creek" = 3))
 
@@ -106,6 +90,7 @@ add_header_above(c("Table 1: Proportions of giant salamanders \nin different cha
 #### C.
 
 Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
+
 ```{r}
 # Is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
 chi_count <- count_creek_base %>% 
@@ -113,16 +98,8 @@ chi_count <- count_creek_base %>%
 
 chi_count_result <- chisq.test(chi_count)
 chi_count_result
-=======
-                position = "float_right")
 ```
 
-#### C.Using the 2017 counts found in Results B above, answer: is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
-
-Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
->>>>>>> fdd295b41635640e701761d19f319ce0091f1661
-
-```
 
 
 #### D. 
