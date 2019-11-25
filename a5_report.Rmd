@@ -10,6 +10,9 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(janitor)
 library(kableExtra)
+library(ggbeeswarm)
+library(ggridges)
+library(ggjoy)
 
 salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
   clean_names() %>% 
@@ -126,7 +129,58 @@ salamander_weight <- salamander %>%
 
 ```{r}
 # Comparison of salamander weights among habitat type
+# First, create a dataframe for just weights and habitat type
+salamander_habitat_2017 <- salamander %>% 
+  filter(year == "2017") %>% 
+  select(unittype, weight) %>% 
+  filter(unittype != "IP") %>% 
+  mutate(unittype = case_when(unittype == "C" ~ "Cascde",
+                              unittype == "P" ~ "Pool",
+                              unittype == "SC" ~ "Side-Channel"))
 
+# Now create a summary table of mean weights and standard deviations by habitat type
+salamander_weight_comparison <- salamander_habitat_2017 %>% 
+  group_by(unittype) %>%
+  summarize(
+    mean_wt = mean(weight, na.rm = TRUE),
+    sd_wt = sd(weight, na.rm = TRUE),
+    sample_size = n(),
+    se_wt = sd(weight / sqrt(sample_size), na.rm = TRUE))
+  
+# Beeswarm plot with mean weights +/- standard error
+ggplot()+
+  geom_violin(data = salamander_habitat_2017, aes(x = unittype, y = weight, fill = unittype), alpha = 0.5, show.legend = FALSE)+
+  geom_point(data = salamander_weight_comparison, aes(x = unittype, y = mean_wt))+
+  geom_errorbar(data = salamander_weight_comparison, 
+                aes(x = unittype,
+                ymax = mean_wt + se_wt,
+                ymin = mean_wt - se_wt),
+                width = 0.3)+
+  scale_y_continuous(limits = c(0, 90),
+                     expand = c(0, 0),
+                     breaks = c(seq(0, 90, by = 10)))+
+  labs(x = "Channel unit",
+       y = "Mean mass (g)",
+       fill = NULL)+
+  coord_flip()+
+  theme_classic()
+
+# Try it as a density plot 
+ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
+  geom_joy(data = filter(salamander_habitat_2017, unittype == "Side-Channel"), 
+           alpha = 0.4,   
+           scale = 0.9)+  
+  geom_joy(data = filter(salamander_habitat_2017, unittype == "Pool"), 
+           alpha = 0.4, 
+           scale = 0.9)+
+  geom_joy(data = filter(salamander_habitat_2017, unittype == "Cascade"), 
+           alpha = 0.4, 
+           scale = 0.9)+
+  theme_joy()+
+  theme_minimal()+
+  labs(x = "Channel unit",
+       y = "Mean mass (g)",
+       fill = NULL) 
 ```
 
 
