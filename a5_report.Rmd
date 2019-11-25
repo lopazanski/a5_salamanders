@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
 library(tidyverse)
 library(janitor)
 library(kableExtra)
@@ -16,10 +16,9 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
   filter(species == "DITE")
 ```
 
-## Create Things Here
-
+***
 ### Introduction
-
+***
 ### Data and Methods
 From Metadata: "Since 1987, we have been monitoring populations of West Slope cutthroat trout (Onchorhyncus clarki clarki) in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest. Beginning in 1993, we included monitoring of Pacific Giant Salamanders, Dicamptodon tenebrosus. The two standard reaches are in a section of clearcut forest (ca. 1963) and an upstream 500 year old coniferous forest. Sub-reaches are sampled with 2-pass electrofishing, and all captured vertebrates are measured and weighed. This study constitutes one of the longest continuous records of salmonid populations on record."
 
@@ -31,6 +30,7 @@ Unit Type = Cascade = C, Pool = P, Side-channel = SC, others (including IP = iso
 Length 1 = snout to vent
 Length 2 = snout to tail
 
+***
 ### Results
 
 #### A.
@@ -101,31 +101,52 @@ chi_count <- count_creek_base %>%
   select(-unittype)
 
 chi_count_result <- chisq.test(chi_count)
-chi_count_result
 ```
 
 
 
 #### D. 
-```{r}
+```{r, include = FALSE}
 # Is there a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017? 
-
 salamander_weight <- salamander %>% 
+  filter(year == "2017") %>% 
+  select(section, weight)
+
+# Subset data for each section for statistical testing
+old_growth_weight <- salamander_weight %>% 
+  filter(section == "OG")
+
+clear_cut_weight <- salamander_weight %>% 
+  filter(section == "CC")
+
+salamander_weight_summary <- salamander %>% 
   filter(year == "2017") %>% 
   select(section, weight) %>% 
   group_by(section) %>% 
   summarize(
-    mean_wt = mean(weight, na.rm = TRUE),
+    median_wt = median(weight, na.rm = TRUE),
     sd_wt = sd(weight, na.rm = TRUE),
     sample_size = n()
   )
+
+# Look at the data 
+ggplot(data = salamander_weight, aes(x = weight)) +
+  geom_histogram(aes(fill = section))
+
+ggplot(data = salamander_weight, aes(sample = weight)) +
+  geom_qq()+
+  facet_wrap(~section)
+
+# The data are not normally distributed - will use a non-parametric test to compare ranks/medians as that will be a better metric of comparison (Mann-Whitney U)
+weight_u <- wilcox.test(old_growth_weight$weight, clear_cut_weight$weight)
+
 ```
 
 
 #### E.
-
+***
 ### Summary
-
+***
 ### References
 
 
