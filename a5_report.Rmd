@@ -5,9 +5,8 @@ date: "11/22/2019"
 output: html_document
 ---
 
-```{r setup, include=FALSE, echo = FALSE, message = FALSE, error = FALSE, warning = FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(janitor)
 library(kableExtra)
@@ -50,11 +49,16 @@ salamander_abundance <- salamander %>%
 ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
   geom_line(aes(color = section))+
   theme_classic()+
+  theme(legend.position = c(0.2, 0.8)) +
   labs(x = "Year",
        y = "Salamander abundance",
-       fill = NULL)
+       color = NULL)+
+  scale_x_continuous(limits = c(1993, 2017),
+                     breaks = c(seq(1993, 2017, by = 2)))+
+  scale_y_continuous(limits = c(0, 400), expand = c(0,0))
   
 ``` 
+***Figure 1.*** *Annual abundances of the Pacific Giant Salamander in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest from 1993 -2017. Salamanders were counted in a reach running through a section of old growth forest (blue line) and a section of historically clear-cut forest (red line).* 
 
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
