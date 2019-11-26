@@ -181,6 +181,7 @@ ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
   labs(x = "Channel unit",
        y = "Mean mass (g)",
        fill = NULL) 
+# ... nope
 ```
 
 
