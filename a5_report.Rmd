@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 library(tidyverse)
 library(janitor)
 library(kableExtra)
@@ -62,7 +62,9 @@ ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
   scale_y_continuous(limits = c(0, 400), expand = c(0,0))
   
 ``` 
-***Figure 1.*** *Annual abundances of the Pacific Giant Salamander in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest from 1993 -2017. Salamanders were counted in a reach running through a section of old growth forest (blue line) and a section of historically clear-cut forest (red line).* 
+***Figure 1.*** *Annual abundances of the Pacific Giant Salamander in two standard reaches of Mack Creek in the H. J. Andrews Experimental Forest from 1993 -2017. Salamanders were counted in a reach running through a section of old growth forest (blue line) and a section of historically clear-cut forest (red line).* 
+
+Throughout 1993-2017, Giant Pacifc Salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections of the H. J. Andrews Experimental Forest, with exceptions to this trend in 1994 and 2014 (Fig. 1). Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011.
 
 #### B.Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
@@ -135,7 +137,7 @@ salamander_habitat_2017 <- salamander %>%
   filter(year == "2017") %>% 
   select(unittype, weight) %>% 
   filter(unittype != "IP") %>% 
-  mutate(unittype = case_when(unittype == "C" ~ "Cascde",
+  mutate(unittype = case_when(unittype == "C" ~ "Cascade",
                               unittype == "P" ~ "Pool",
                               unittype == "SC" ~ "Side-Channel"))
 
@@ -167,21 +169,21 @@ ggplot()+
   theme_classic()
 
 # Try it as a density plot 
-ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
-  geom_joy(data = filter(salamander_habitat_2017, unittype == "Side-Channel"), 
-           alpha = 0.4,   
-           scale = 0.9)+  
-  geom_joy(data = filter(salamander_habitat_2017, unittype == "Pool"), 
-           alpha = 0.4, 
-           scale = 0.9)+
-  geom_joy(data = filter(salamander_habitat_2017, unittype == "Cascade"), 
-           alpha = 0.4, 
-           scale = 0.9)+
-  theme_joy()+
-  theme_minimal()+
-  labs(x = "Channel unit",
-       y = "Mass (g)",
-       fill = NULL) 
+#ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
+ # geom_joy(data = filter(salamander_habitat_2017, unittype == "Side-Channel"), 
+#           alpha = 0.4,   
+#           scale = 0.9)+  
+#  geom_joy(data = filter(salamander_habitat_2017, unittype == "Pool"), 
+ #          alpha = 0.4, 
+  #         scale = 0.9)+
+#  geom_joy(data = filter(salamander_habitat_2017, unittype == "Cascade"), 
+#           alpha = 0.4, 
+#           scale = 0.9)+
+#  theme_joy()+
+#  theme_minimal()+
+#  labs(x = "Channel unit",
+#       y = "Mass (g)",
+#       fill = NULL) 
 # ... nope
 ```
 ***Figure 2. *** *Distributions for Giant Pacific Salamander mass (g) are displayed (violins) for habitat type, pooled for old growth and clear cut sections of forest. Mean masses (black dots) $\pm$ standard error (error bars) are displayed for each habitat type.*
@@ -190,6 +192,7 @@ ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
 # Comaparison of mean weights using one-way ANOVA
 habitat_mass_anova <- aov(weight ~ unittype, data = salamander_habitat_2017)
 summary(habitat_mass_anova)
+aov_outputs <- unlist(summary(habitat_mass_anova))
 
 # Post hoc test to determine group differences
 TukeyHSD(habitat_mass_anova)
@@ -202,13 +205,39 @@ salamander_side_channel_2017 <- salamander_habitat_2017 %>%
 salamander_pool_2017 <- salamander_habitat_2017 %>% 
   filter(unittype == "Pool")
 
-effect_size_habitat <- cohen.d(salamander_side_channel_2017$weight, salamander_pool_2017$weight)
+salamander_cascade_2017 <- salamander_habitat_2017 %>% 
+  filter(unittype == "Cascade")
+
+effect_size_habitat <- cohen.d(salamander_pool_2017$weight, salamander_side_channel_2017$weight)
+
+# Means differences
+mean_pool <- mean(salamander_pool_2017$weight)
+
+mean_sc <- mean(salamander_side_channel_2017$weight)
+
+mean_cascade <- mean(salamander_cascade_2017$weight, na.rm = TRUE)
+
+mean_pool - mean_sc
+
+# Percent differences
+pct_diff <- ((mean_pool-mean_sc)/mean_sc)*100
+
+# Standard errors for in-line referencing
+se_pool <- salamander_pool_2017 %>% 
+  summarize(sd(weight/sqrt(n())))
+
+se_side_channel <- salamander_side_channel_2017 %>% 
+  summarize(sd(weight/sqrt(n())))
+
+se_cascade <- salamander_cascade_2017 %>% 
+  summarize(sd(weight/sqrt(n()), na.rm = TRUE))
 ```
-
-
+In 2017, mean weights of Giant Pacific Salamanders differed significantly between pools and side channels (one-way ANOVA with post-hoc Tukey's HSD: F$_{`r aov_outputs[1]`,`r aov_outputs[2]`}$ = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`), while mean weights for individuals from cascades did not differ significantly from the other two habitat types (Fig. 2). The average weight for populations residing in pools (`r round(mean_pool, 2)` $\pm$ `r round(se_pool, 2)` g) was `r round(pct_diff, 2)`% more than that of populations observed in side-channels (`r round(mean_sc, 2)` $\pm$ `r round(se_side_channel, 2)` g). Due to large within group variation of salamander weights in each habitat type, an alternative metric -- population medians, for instance -- may lend to a more meaningful and accurate comparison across these groups.
 
 
 ### Summary
+
+- In 2017, the mean weight of salamanders residing in pools was significantly greater than that of populations in side channels (Fig. 2).
 
 ### References
 
