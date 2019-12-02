@@ -26,7 +26,7 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 
 ### Introduction
 
-Amphibian populations have been declining for over half a century^1^, with more than 32% of global populations currently threatened^2^. Habitat loss and fragmentation are among the biggest threats to these fragile populations, which require particular temperatures and levels of moisture to survive^3^. Clear-cut logging, in particular, has been shown to increase sedimentation in streams, which negatively impacts larval amphibians^3^. Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including the Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program (HJA LTER), which monitors the threatened Pacific giant salamander (*Dicamptodon tenebrosus*) among other species. Here, we examine the distribution of Pacific giant salamanders in a section of forest that was clear-cut for logging in 1963 compared to a nearby 500 year old coniferous forest in Mack Creek, Oregon. Restoration efforts are sometimes used to attempt to convert habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity^4^. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
+Amphibian populations have been declining for over half a century^1^, with more than 32% of global populations currently threatened^2^. Habitat loss and fragmentation are among the biggest threats to these fragile populations, which require particular temperatures and moisture levels to survive^3^. Clear-cut logging, in particular, has been shown to increase sedimentation in streams, which negatively impacts larval amphibians^3^. Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including the Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program (HJA LTER), which monitors the threatened Pacific giant salamander (*Dicamptodon tenebrosus*) among other species. Here, we examine the distribution of Pacific giant salamanders in a section of forest that was clear-cut for logging in 1963 compared to a nearby 500 year old coniferous forest in Mack Creek, Oregon. Restoration efforts are sometimes used to attempt to convert salamander habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity^4^. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mmm1Ml4sHE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -109,9 +109,7 @@ add_header_above(c("Table 1: Proportions of giant salamanders \nin different cha
 
 
 
-#### C.
-
-Another way to ask this: Regarding the locations where salamanders were observed in Mack Creek in 2017, is there a significant effect of forest condition (old growth or clear cut) on where in the channel salamanders are found (channel classification)? Report your statistical findings in text, in the context of the actual counts / proportions you present in the table. 
+#### Effect of forest condition on particular habitat use 
 
 ```{r}
 # Is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
@@ -119,13 +117,13 @@ chi_count <- count_creek_base %>%
   select(-unittype)
 
 chi_count_result <- chisq.test(chi_count)
-chi_count_result
+
 ```
 
+There is not a significant effect of forest condition (old growth or clear-cut) on where in the channel salamanders are found ($\chi$^2^(`r chi_count_result$parameter`) = `r chi_count_result$statistic`). There are similar proportions of salamanders found in each of the three channel classifications (cascades, pools, and side-channels) for both the clear-cut and old growth sections of forest (Table 1).
 
 
-#### D. 
-```{r}
+```{r Part D}
 # Is there a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017? 
 
 salamander_weight <- salamander %>% 
@@ -267,7 +265,7 @@ There is a significant difference in mean weights for Pacific giant salamanders 
 
 3. Johnston, B. and Frid, L. "Clearcut logging restricts the movements of terrestrial Pacific giant salamanders (Dicamptodon tenebrosus Good)" Canadian Journal of Zoology 80 (2011): 2170-2177.
 
-4. IDK WHICH ONE IT IS CAUSE YOU CANT GET ACCESS OFF CAMPUS WHICH IS DUMB SO GUESS ILLL DO IT TOMORROW
+4. Roni, P. "Habitat use by fishes and pacific giant salamanders in small western Oregon and Washington streams." Transactions of the American Fisheries Society 131.4 (2002): 743-761.
 
 5. Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
 
