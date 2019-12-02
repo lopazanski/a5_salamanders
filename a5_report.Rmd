@@ -23,19 +23,7 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 ***
 ### Introduction
 
-Amphibians are often considered bioindicators because they generall
-Habitat loss and fragmentation are some of the biggest threats to amphibian populations worldwide. 
-
-Forestry and land-use changes often alter the physical characteristics of adjacent creeks and streams that make up amphibian habitat, potentially adversely impacting salmonid habitat. 
-
-Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including one by the 
-
-Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program. 
-
-Restoration efforts are sometimes used to attempt to convert habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
-
-This report compares populations of Pacific giant salamanders observed in Mack Creek in Andrews Experimental Forest, Oregon. It compares the distribution of salamanders in different habitats in a section of forest that was clear-cut for logging in 1963 to a nearby 500 year old coniferous forest. 
-
+Amphibian populations have been declining for over half a century^1^, with more than 32% of global populations currently threatened^2^. Habitat loss and fragmentation are among the biggest threats to these fragile populations, which require particular temperatures and levels of moisture to survive^3^. Clear-cut logging, in particular, has been shown to increase sedimentation in streams, which negatively impacts larval amphibians^3^. Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including the Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program (HJA LTER), which monitors the threatened Pacific giant salamander (*Dicamptodon tenebrosus*) among other species. Here, we examine the distribution of Pacific giant salamanders in a section of forest that was clear-cut for logging in 1963 compared to a nearby 500 year old coniferous forest in Mack Creek, Oregon. Restoration efforts are sometimes used to attempt to convert habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity^4^. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mmm1Ml4sHE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -173,7 +161,18 @@ There is a significant difference in mean weights for Pacific giant salamanders 
 #### E.
 ***
 ### Summary
+
 ***
 ### References
+
+1. Houlahan, J., et al. "Quantitative evidence for global amphibian population declines." Nature 404 (2000): 752-755.
+
+2. Stuart, S. N., et al. "Status and trends of amphibian declines and extinctions worldwide." Science 306 (2004): 1783-1786.
+
+3. Johnston, B. and Frid, L. "Clearcut logging restricts the movements of terrestrial Pacific giant salamanders (Dicamptodon tenebrosus Good)" Canadian Journal of Zoology 80 (2011): 2170-2177.
+
+4. IDK WHICH ONE IT IS CAUSE YOU CANT GET ACCESS OFF CAMPUS WHICH IS DUMB SO GUESS ILLL DO IT TOMORROW
+
+5. Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
 
 
