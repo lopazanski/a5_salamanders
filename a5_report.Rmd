@@ -26,7 +26,7 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 
 ### Introduction
 
-Amphibian populations have been declining for over half a century^1^, with more than 32% of global populations currently threatened^2^. Habitat loss and fragmentation are among the biggest threats to these fragile populations, which require particular temperatures and moisture levels to survive^3^. Clear-cut logging, in particular, has been shown to increase sedimentation in streams, which negatively impacts larval amphibians^3^. Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including the Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program (HJA LTER), which monitors the threatened Pacific giant salamander (*Dicamptodon tenebrosus*) among other species. Here, we examine the distribution of Pacific giant salamanders in a section of forest that was clear-cut for logging in 1963 compared to a nearby 500 year old coniferous forest in Mack Creek, Oregon. Restoration efforts are sometimes used to attempt to convert salamander habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity^4^. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
+Amphibian populations have been declining for over half a century^1^, with more than 32% of global populations currently threatened^2^. Habitat loss and fragmentation are among the biggest threats to these fragile populations, which require particular temperatures and levels of moisture to survive^3^. Clear-cut logging, in particular, has been shown to increase sedimentation in streams, which negatively impacts larval amphibians^3^. Monitoring efforts have been implemented to assess how activities like clear-cutting affect salmonid populations, including the Aquatic Vertebrate Population Study within the H.J. Andrews Forest Long Term Ecological Research Program (HJA LTER), which monitors the threatened Pacific giant salamander (*Dicamptodon tenebrosus*) among other species. Here, we examine the distribution of Pacific giant salamanders in a section of forest that was clear-cut for logging in 1963 compared to a nearby 500 year old coniferous forest in Mack Creek, Oregon. Restoration efforts are sometimes used to attempt to convert habitats from a degraded state back to their pre-disturbance condition, typically by creating pools or increasing habitat complexity^4^. Understanding how the distribution of Pacific giant salamanders changes in different habitats can help guide restoration efforts. 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mmm1Ml4sHE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -34,6 +34,7 @@ Amphibian populations have been declining for over half a century^1^, with more 
 
 ***
 ### Data and Methods
+
 From Metadata: "Since 1987, we have been monitoring populations of West Slope cutthroat trout (Onchorhyncus clarki clarki) in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest. Beginning in 1993, we included monitoring of Pacific Giant Salamanders, Dicamptodon tenebrosus. The two standard reaches are in a section of clearcut forest (ca. 1963) and an upstream 500 year old coniferous forest. Sub-reaches are sampled with 2-pass electrofishing, and all captured vertebrates are measured and weighed. This study constitutes one of the longest continuous records of salmonid populations on record."
 
 Site Code = coded name of sample area within Mack creek
@@ -46,10 +47,10 @@ Length 2 = snout to tail
 
 ### Results
 
-#### A.
+#### Giant Pacific Salamander abundance over time
 
-```{r}
-# subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
+```{r part A}
+# Subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section
 salamander_abundance <- salamander %>% 
   select(year, section, species) %>% 
   mutate(species = ifelse(species == "DITE", 1, 0)) %>% 
@@ -76,13 +77,13 @@ ggplot(data = salamander_abundance, aes(x = year, y = abundance))+
 
 Throughout 1993-2017, Giant Pacifc Salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections of the H. J. Andrews Experimental Forest, with exceptions to this trend in 1994 and 2014 (Fig. 1). Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011.
 
-#### B.
+#### Salamander habitat preference in old growth vs clear-cut forest sections
 
 Table of 2017 salamander counts by channel classification (pool, cascades and side-channel) in old growth (OG) and clear cut (CC) sections of Mack Creek. 
 
 Using only Pacific giant salamander observations from 2017, create a finalized table showing the counts and proportions of salamanders observed in different channel classifications (pool, cascade, or side-channel) within Mack Creek for the two sections (OG and CC). Add a table caption above the table. Note: We’re only interested in Pacific giant salamanders observed in the creek, so you should exclude salamanders observed in isolated pools (IP) disconnected from the channel. 
 
-```{r}
+```{r part B}
 count_creek_base <- salamander %>% 
   filter(year == "2017" & unittype %in% c("C", "P", "SC")) %>% # keep data in 2017, specific habitat types
   mutate( 
@@ -107,23 +108,17 @@ add_header_above(c("Table 1: Proportions of giant salamanders \nin different cha
 ```
 
 
-
-
-#### Effect of forest condition on particular habitat use 
-
-```{r}
+```{r part C}
 # Is there a significant difference in where in the channel Pacific giant salamanders are located (pool, cascade or side channel) between the two sections (old growth and clear cut)? 
 chi_count <- count_creek_base %>% 
   select(-unittype)
 
 chi_count_result <- chisq.test(chi_count)
-
+chi_count_result
 ```
 
-There is not a significant effect of forest condition (old growth or clear-cut) on where in the channel salamanders are found ($\chi$^2^(`r chi_count_result$parameter`) = `r chi_count_result$statistic`). There are similar proportions of salamanders found in each of the three channel classifications (cascades, pools, and side-channels) for both the clear-cut and old growth sections of forest (Table 1).
-
-
-```{r Part D}
+#### Comparison of Salamander weight in old growth vs clear-cut forest sections
+```{r part D}
 # Is there a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017? 
 
 salamander_weight <- salamander %>% 
@@ -136,11 +131,11 @@ salamander_weight <- salamander %>%
     sample_size = n()
   )
 ```
+There is a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017
 
+#### Comparison of Salamander weight by habitat type
 
-#### E.
-
-```{r}
+```{r part E}
 # Comparison of salamander weights among habitat type
 # First, create a dataframe for just weights and habitat type
 salamander_habitat_2017 <- salamander %>% 
@@ -180,12 +175,12 @@ ggplot()+
 
 # Try it as a density plot 
 #ggplot(salamander_habitat_2017, aes(x = weight, y = unittype, fill = unittype))+
- # geom_joy(data = filter(salamander_habitat_2017, unittype == "Side-Channel"), 
+# geom_joy(data = filter(salamander_habitat_2017, unittype == "Side-Channel"), 
 #           alpha = 0.4,   
 #           scale = 0.9)+  
 #  geom_joy(data = filter(salamander_habitat_2017, unittype == "Pool"), 
- #          alpha = 0.4, 
-  #         scale = 0.9)+
+#          alpha = 0.4, 
+#         scale = 0.9)+
 #  geom_joy(data = filter(salamander_habitat_2017, unittype == "Cascade"), 
 #           alpha = 0.4, 
 #           scale = 0.9)+
@@ -200,7 +195,7 @@ ggplot()+
 ***Figure 2. *** *Distributions for Giant Pacific Salamander mass (g) are displayed (violins) for habitat type, pooled for old growth and clear cut sections of forest. Mean masses (black dots) $\pm$ standard error (error bars) are displayed for each habitat type.*
 
 
-```{r}
+```{r part E}
 # Comaparison of mean weights using one-way ANOVA
 habitat_mass_anova <- aov(weight ~ unittype, data = salamander_habitat_2017)
 habtiat_anova_summary <- summary(habitat_mass_anova)
@@ -247,8 +242,6 @@ se_cascade <- salamander_cascade_2017 %>%
 
 In 2017, mean weights of Giant Pacific Salamanders differed significantly between pools and side channels (one-way ANOVA with post-hoc Tukey's HSD: F$_{`r aov_outputs[1]`,`r aov_outputs[2]`}$ = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`), while mean weights for individuals from cascades did not differ significantly from the other two habitat types (Fig. 2). The average weight for populations residing in pools (`r round(mean_pool, 2)` $\pm$ `r round(se_pool, 2)` g) was `r round(pct_diff, 2)`% more than that of populations observed in side-channels (`r round(mean_sc, 2)` $\pm$ `r round(se_side_channel, 2)` g). Due to large within group variation of salamander weights in each habitat type, an alternative metric -- population medians, for instance -- may lend to a more meaningful and accurate comparison across these groups.
 
-There is a significant difference in mean weights for Pacific giant salamanders observed in the two forest sections (clear cut and old growth) in 2017
-
 ***
 ### Summary
 
@@ -265,7 +258,7 @@ There is a significant difference in mean weights for Pacific giant salamanders 
 
 3. Johnston, B. and Frid, L. "Clearcut logging restricts the movements of terrestrial Pacific giant salamanders (Dicamptodon tenebrosus Good)" Canadian Journal of Zoology 80 (2011): 2170-2177.
 
-4. Roni, P. "Habitat use by fishes and pacific giant salamanders in small western Oregon and Washington streams." Transactions of the American Fisheries Society 131.4 (2002): 743-761.
+4. IDK WHICH ONE IT IS CAUSE YOU CANT GET ACCESS OFF CAMPUS WHICH IS DUMB SO GUESS ILLL DO IT TOMORROW
 
 5. Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
 
