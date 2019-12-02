@@ -30,10 +30,15 @@ Amphibian populations have been declining for over half a century^1^, with more 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/mmm1Ml4sHE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
-
 ***
 ### Data and Methods
+As part of an effort to monitor population trends of aquatic vertebrates in the H.J. Andrews Experimental Forest, data on annual abundances, weights, forest section location, and habitat preferences of the Pacific giant salamander have been collected by researchers with the Andrews Forest Long Term Ecological research site since 1993^5^. Mack Creek runs through sections of both old growth and historically clear-cut forest and provides three primary types of habitat for aquatic organisms (pools, side-channels, and cascades). 150m stretches of the creek are divided into contiguous 50m sections, which were netted at each end. Observations for aquatic vertebrates were acquired via two-pass electrofishing, followed by subsequent measurement of body dimensions and weight for all captured individuals.
+
+We compared annual abundances since 1993, and habitat preferences and weight differences in 2017 for Pacific giant salamanders in old growth and clear cut sections of forest. We used a Chi-square test to assess salamander habitat preferences within forest sections, a Mann-Whitney U rank-based test to compare mean weights by forest section, and a one-way ANOVA to compare mean weights of salamanders across the three primary habitat types. For all statistical tests, we used a significance level of $\alpha$ = 0.05. 
+
+
+
+to assess differences in population characteristics of this species within different areas of Mack Creek.
 
 From Metadata: "Since 1987, we have been monitoring populations of West Slope cutthroat trout (Onchorhyncus clarki clarki) in two standard reaches of Mack Creek in the H.J. Andrews Experimental Forest. Beginning in 1993, we included monitoring of Pacific Giant Salamanders, Dicamptodon tenebrosus. The two standard reaches are in a section of clearcut forest (ca. 1963) and an upstream 500 year old coniferous forest. Sub-reaches are sampled with 2-pass electrofishing, and all captured vertebrates are measured and weighed. This study constitutes one of the longest continuous records of salmonid populations on record."
 
@@ -136,7 +141,7 @@ There is a significant difference in mean weights for Pacific giant salamanders 
 #### Comparison of Salamander weight by habitat type
 
 ```{r part E}
-# Comparison of salamander weights among habitat type
+# Comparison of salamander weights across habitat type
 # First, create a dataframe for just weights and habitat type
 salamander_habitat_2017 <- salamander %>% 
   filter(year == "2017") %>% 
