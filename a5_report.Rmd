@@ -203,7 +203,7 @@ ggplot()+
 ```{r}
 # Comaparison of mean weights using one-way ANOVA
 habitat_mass_anova <- aov(weight ~ unittype, data = salamander_habitat_2017)
-summary(habitat_mass_anova)
+habtiat_anova_summary <- summary(habitat_mass_anova)
 aov_outputs <- unlist(summary(habitat_mass_anova))
 
 # Post hoc test to determine group differences
