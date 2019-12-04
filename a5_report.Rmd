@@ -1,5 +1,5 @@
 ---
-title: "INTERESTING SALAMANDER TITLE HERE"
+title: "Population characteristics of the Pacific giant salamander in old growth vs clear cut forests"
 author: "Cori Lopazanski, Kai Kopecky"
 date: "11/22/2019"
 output: 
@@ -49,7 +49,7 @@ We compared annual abundances since 1993, and habitat preferences and weight dif
 
 #### Pacific giant salamander abundance over time
 
-Trends in Pacific giant salamander abundance were compared for the clear cut and old growth sections of Mack Creek from 1993 to 2017 (Figure 4). 
+Trends in Pacific giant salamander abundance were compared for the clear cut and old growth sections of Mack Creek from 1993 to 2017 (Figure 4). Throughout 1993-2017, Pacifc giant salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections, with exceptions to this trend in 1994 and 2014. Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011. Overall, populations of salamanders increased from 1993 to 2017 by 154% in the old growth section, and 192% in the clear cut section. 
 
 ```{r part A}
 # Subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section; in hindsight count() would be easier but this worked
@@ -95,8 +95,6 @@ count_section_table <- salamander_count %>%
 
 ***Figure 4.*** *Annual abundances of the Pacific giant salamander in two standard reaches of Mack Creek in the H. J. Andrews Experimental Forest from 1993 -2017. Salamanders were counted in a reach running through a section of old growth forest (blue line) and a section of historically clear-cut forest (red line).* 
 
-Throughout 1993-2017, Pacifc giant salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections of the H. J. Andrews Experimental Forest, with exceptions to this trend in 1994 and 2014 (Figure 4). Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011. Overall, populations of salamanders increased from 1993 to 2017 - by 154% in the old growth section, and 192% in the clear cut section. 
-
 #### Salamander habitat preference within old growth vs clear cut forest sections
 
 ```{r part B}
@@ -133,7 +131,7 @@ chi_count_result <- chisq.test(chi_count)
 
 Channels that make up Pacific giant salamander habitat are often classified into three different areas: cascades, pools, and side channels. Proportions of salamanders in each channel classification were compared for the old growth and clear cut sections of Mack Creek (Table 1). 
 
-There is not a significant effect of forest condition (old growth or clear cut) on where salamanders are found in the channel ($\chi$^2^(`r chi_count_result$parameter`) = `r round(chi_count_result$statistic, 2)`, p = `r round(chi_count_result$p.value, 2)`). There are similar proportions of salamanders found in each of the three channel classifications in both the clear-cut and old growth sections of forest (Table 1).
+There is not a significant effect of forest section (old growth or clear cut) on where salamanders are found in the channel ($\chi$^2^(`r chi_count_result$parameter`) = `r round(chi_count_result$statistic, 2)`, p = `r round(chi_count_result$p.value, 2)`). There are similar proportions of salamanders found in each of the three channel classifications in both the clear-cut and old growth sections of forest (Table 1).
 
 
 
@@ -315,18 +313,16 @@ se_cascade <- salamander_cascade_2017 %>%
   summarize(sd(weight/sqrt(n()), na.rm = TRUE))
 ```
 
-However, mean weights of Pacific giant salamanders differed significantly between pools and side channels (one-way ANOVA with post-hoc Tukey's HSD: F$_{`r aov_outputs[1]`,`r aov_outputs[2]`}$ = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`). Mean weights for individuals from cascades did not differ significantly from the other two habitat types (Figure 5). The average weight for populations residing in pools (`r round(mean_pool, 2)` $\pm$ `r round(se_pool, 2)` g) was `r round(pct_diff, 2)`% more than that of populations observed in side-channels (`r round(mean_sc, 2)` $\pm$ `r round(se_side_channel, 2)` g). Due to large within group variation of salamander weights in each habitat type, an alternative metric -- population medians, for instance -- may lend to a more meaningful and accurate comparison across these groups. This could be achieved by ...?
+Mean weights of Pacific giant salamanders did differ significantly between pools and side channels (one-way ANOVA with post-hoc Tukey's HSD: F$_{`r aov_outputs[1]`,`r aov_outputs[2]`}$ = `r round(aov_outputs[7],2)`, *p* = `r round(aov_outputs[9],3)`). Mean weights for individuals from cascades did not differ significantly from the other two habitat types (Figure 5). The average weight for populations residing in pools (`r round(mean_pool, 2)` $\pm$ `r round(se_pool, 2)` g) was `r round(pct_diff, 2)`% more than that of populations observed in side-channels (`r round(mean_sc, 2)` $\pm$ `r round(se_side_channel, 2)` g). Due to large within group variation of salamander weights in each habitat type, an alternative metric -- population medians, for instance -- may lend to a more meaningful and accurate comparison across these groups. This could be achieved by using a rank-based test, such as a Mann-Whitney U test.
 
 ***
 ### Summary
 
-- From 1993-2017, Giant Pacific Salamnder abundances were consistently higher in sections of old growth forest than histrocially clear cut sections of forest, apart from two years (Figure 4) ***Not totally sure if I think this is the best summary point***
-- There is no significant difference in mean salamander weight in 2017 for the old growth compared to the clear cut section of forest
+- From 1993-2017, Pacific giant salamander abundances were consistently higher in sections of old growth forest than histrocially clear cut sections of forest, apart from two years (Figure 4) ***Not totally sure if I think this is the best summary point***
+- Forest section (old growth vs clear cut) did not significantly affect the habitat type (pool, cascade, or side-channel) in which salamnders were found  
+- There is no significant difference in mean salamander weight in 2017 for the old growth compared to the clear cut section of forest (Table 1)
 - In 2017, the mean weight of salamanders residing in pools was significantly greater than that of populations in side channels (Figure 5)
 
-***Maybe one more summary point?***
-
-***
 ### References
 
 1. Houlahan, J., et al. "Quantitative evidence for global amphibian population declines." Nature 404 (2000): 752-755.
