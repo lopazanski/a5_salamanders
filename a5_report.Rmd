@@ -40,7 +40,7 @@ Amphibian populations have been declining for over half a century^1^, with more 
 ### Data and Methods
 As part of an effort to monitor population trends of aquatic vertebrates in the H.J. Andrews Experimental Forest, data on annual abundances, weights, forest section location, and habitat preferences of the Pacific giant salamander have been collected by researchers with the Andrews Forest Long Term Ecological research site since 1993^5^. Mack Creek runs through sections of both old growth and historically clear-cut forest and provides three primary types of habitat for aquatic organisms (pools, side-channels, and cascades). 150m stretches of the creek are divided into contiguous 50m sections, which were netted at each end. Observations for aquatic vertebrates were acquired via two-pass electrofishing, followed by subsequent measurement of body dimensions and weight for all captured individuals.
 
-We compared annual abundances since 1993, and habitat preferences and weight differences in 2017 for Pacific giant salamanders in old growth and clear cut sections of forest. We used a Chi-square test to assess salamander habitat preferences within forest sections, a two-sample t-test to compare mean weights by forest section, and a one-way ANOVA to compare mean weights of salamanders across the three primary habitat types. For all statistical tests, we used a significance level of $\alpha$ = 0.05. All data preparation and analyses were completed using R software (version 3.6.1) and RStudio (version 1.2.5001).
+We compared annual abundances from 1993 - 2017, and habitat preferences and weight differences in 2017 for Pacific giant salamanders in old growth and clear cut sections of forest. We used a Chi-square test to assess salamander habitat preferences within forest sections, a two-sample t-test to compare mean weights by forest section, and a one-way ANOVA to compare mean weights of salamanders across the three primary habitat types. For all statistical tests, we used a significance level of $\alpha$ = 0.05. All data preparation and analyses were completed using R software (version 3.6.1) and RStudio (version 1.2.5001).
 
 ![***Figure 3.*** Map of H. J. Andrews Experimental Forest with associated streams. Streams are depicted as blue lines and sample locations as green circles. This report focuses on salamanders found in Mack Creek. Picture credit: Sashka Warner. ([source](https://www.researchgate.net/publication/324601050_Interactions_of_Roads_and_Deforestation_with_Stream_Sediment_Size_and_Network_Structure_in_the_Western_Cascade_Range_of_Oregon/figures?lo=1))](HJ_andrews_national_forest_map.png)
 
@@ -49,7 +49,7 @@ We compared annual abundances since 1993, and habitat preferences and weight dif
 
 #### Pacific giant salamander abundance over time
 
-Trends in Pacific giant salamander abundance were compared for the clear cut and old growth sections of Mack Creek from 1993 to 2017 (Figure 4). Throughout 1993-2017, Pacifc giant salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections, with exceptions to this trend in 1994 and 2014-2017. Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011. Overall, populations of salamanders increased from 1993 to 2017 by 154% in the old growth section, and 192% in the clear cut section. 
+Trends in Pacific giant salamander abundance were compared for the clear cut and old growth sections of Mack Creek from 1993 - 2017 (Figure 4). Throughout 1993 - 2017, Pacific giant salamander abundances observed in sections of old growth forest were consistently higher than in historically clear-cut sections, with exceptions to this trend in 1994 and 2014 - 2017. Both populations show a marked increase in abundance following 2001 and 2014, as well as a sharp decline in 2011. Overall, populations of salamanders increased from 1993 to 2017 by 154% in the old growth section, and 192% in the clear cut section. 
 
 ```{r part A}
 # Subset salamander dataframe to include only columns of interest and salamander counts for each year by forest section; in hindsight count() would be easier but this worked
@@ -321,7 +321,7 @@ Mean weights of Pacific giant salamanders did differ significantly between pools
 ***
 ### Summary
 
-- From 1993-2017, overall Pacific giant salamander abundances increased in both old growth and  historically clear cut sections of forest, by 154% and 192% respectively (Figure 4).
+- From 1993 - 2017, overall Pacific giant salamander abundances increased in both old growth and  historically clear cut sections of forest, by 154% and 192% respectively (Figure 4).
 - Forest section (old growth vs clear cut) did not significantly affect the habitat type (pool, cascade, or side-channel) in which salamnders were found (Table 1). 
 - There is no significant difference in mean salamander weight in 2017 for the old growth compared to the clear cut section of forest.
 - In 2017, the mean weight of salamanders residing in pools was significantly greater than that of populations in side channels (Figure 5).
@@ -334,7 +334,7 @@ Mean weights of Pacific giant salamanders did differ significantly between pools
 
 3. Johnston, B. and Frid, L. "Clearcut logging restricts the movements of terrestrial Pacific giant salamanders (Dicamptodon tenebrosus Good)" Canadian Journal of Zoology 80 (2011): 2170-2177.
 
-4. IDK WHICH ONE IT IS CAUSE YOU CANT GET ACCESS OFF CAMPUS WHICH IS DUMB SO GUESS ILLL DO IT TOMORROW
+4. Roni, P. “Habitat use by fishes and pacific giant salamanders in small western Oregon and Washington streams.” Transactions of the American Fisheries Society 131.4 (2002): 743-761.
 
 5. Gregory S. V. 2016. Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
 
